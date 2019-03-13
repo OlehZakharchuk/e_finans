@@ -1,4 +1,4 @@
-package com.acountservice2.config;
+package com.acountservice2.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/main_page")
                 .hasRole("USER")
-                .antMatchers("/*", "/**").permitAll()
-        .and().formLogin().loginPage("/login");
+                .antMatchers("/", "/**").permitAll()
+        .and().formLogin().loginPage("/login")
+        .defaultSuccessUrl("/mainpage");
     }
 
 

@@ -1,11 +1,11 @@
 package com.acountservice2.repositories;
 
-import com.acountservice2.entities.UserEntity;
+import com.acountservice2.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity,Long> {
+public interface UserRepository extends CrudRepository<User,Long> {
 
-    UserEntity findByLogin(String login);
+    User findByLogin(String login);
 }

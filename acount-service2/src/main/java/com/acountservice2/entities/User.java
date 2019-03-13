@@ -8,10 +8,12 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
-
 @Entity
 @Table(name = "user", schema = "AccountDB")
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +29,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "email", nullable = true, length = 40)
     private String email;
 
-    public UserEntity(String firstName, String lastName, String login, String password, String email) {
+    public User(String firstName, String lastName, String login, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -36,7 +38,7 @@ public class UserEntity implements UserDetails {
     }
 
 
-    public UserEntity() {
+    public User() {
     }
 
     public Long getId() {
@@ -86,7 +88,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getLogin();
+        return login;
     }
 
     @Override
@@ -125,7 +127,7 @@ public class UserEntity implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
+        User that = (User) o;
         return id == that.id &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&

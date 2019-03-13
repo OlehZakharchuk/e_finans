@@ -3,8 +3,6 @@ package com.acountservice2.entities;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Column;
-
 @Data
 public class RegistrationForm {
 
@@ -17,8 +15,8 @@ public class RegistrationForm {
     private String password;
 
     private String email;
-    public UserEntity toUser(PasswordEncoder passwordEncoder) {
-        return new UserEntity(
+    public User toUser(PasswordEncoder passwordEncoder) {
+        return new User(
                 firstName, lastName, login, passwordEncoder.encode(password), email);
     }
 
