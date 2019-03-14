@@ -1,21 +1,13 @@
-
+span.validationError {
+    color: red;
+    font-size: xx-small;
+}
 .login-page {
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
 }
-.welcomeStyle {
-    position: absolute;
-    box-shadow: #8DC26F;
-    background: #76b852;
-    border: #1afa1a;
-    mso-border-shadow: yes;
-    right: 10%;
-    top: 25vm;
-    height: 15vm;
-    outline: 8px ridge rgba(115,164,160,0.98);
-    outline-offset: 0px;
-}
+
 .form {
     position: relative;
     bottom: 15px;

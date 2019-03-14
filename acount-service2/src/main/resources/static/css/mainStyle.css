@@ -4,7 +4,18 @@
     padding: 8% 0 0;
     margin: auto;
 }
-
+.welcomeStyle {
+    position: absolute;
+    box-shadow: #8DC26F;
+    background: #76b852;
+    border: #1afa1a;
+    right: 2px;
+    top: 2px;
+    height: 15vm;
+    width: 15%;;
+    outline: 8px ridge #26b852;
+    outline-offset: 0px;
+}
 .form {
     position: relative;
 

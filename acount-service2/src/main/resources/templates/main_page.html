@@ -5,17 +5,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Login page</title>
-    <link href="../static/css/homeStyle.css"  th:href="@{/css/homeStyle.css}" rel="stylesheet" type="text/css" media="all">
+    <link href="../static/css/mainStyle.css"  th:href="@{/css/mainStyle.css}" rel="stylesheet" type="text/css" media="all">
 </head>
 
 <body>
 <div class="welcomeStyle">
-    <p>Welcome: ${nameOfLogedUser}</p>
-    <p>Login: ${loginOfLogedUser}</p>
+    <p th:text="${nameOfLogedUser}">Welcome: </p>
+    You logged as: <p th:text ="${loginOfLogedUser}"></p>
+    <form method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
 </div>
-<form method="POST" th:action="@{/logout}">
-    <input type="submit" value="Logout"/>
-</form>
+
 <!--<footer>-->
 
 
