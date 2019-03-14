@@ -23,13 +23,19 @@ public class RegistrationValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
             RegistrationForm form = (RegistrationForm) o;
-            User user = userRepository.findByLogin(form.getLogin());
+            User user = userRepository.findByLoginOrEmail(form.getLogin(), form.getEmail());
             log.info("Sprawdzanie unikatowosci username: "+ form);
-            if(user!=null && form.getLogin().equals(user.getLogin())){
+            if(user!=null){
+                if(user.getLogin().equals(form.getLogin()))
                 //second argument login used on thymeleaf
                 errors.rejectValue("login", "login" ,"Username already exists");
-
+                if(user.getEmail().equals(form.getEmail())){
+                errors.rejectValue("email", "email", "Account with this email already exists");
+                }
             }
+
+
+
 
     }
 }
