@@ -1,4 +1,4 @@
-package com.acountservice2.security;
+package com.acountservice2.validation;
 
 import com.acountservice2.entities.RegistrationForm;
 import com.acountservice2.entities.User;

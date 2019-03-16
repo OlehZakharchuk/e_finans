@@ -1,5 +1,8 @@
 package com.acountservice2.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,7 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
+import java.util.Set;
+
+
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "user", schema = "AccountDB")
 public class User implements UserDetails {
@@ -29,6 +36,14 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = true, length = 40)
     private String email;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_spending", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "spending_id", referencedColumnName = "id"))
+    Set<Spending> spendings;
+
+
+
+
     public User(String firstName, String lastName, String login, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,53 +52,10 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     @Override
@@ -111,45 +83,5 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User that = (User) o;
-        return id == that.id &&
-                Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(login, that.login) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(email, that.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, login, password, email);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }
