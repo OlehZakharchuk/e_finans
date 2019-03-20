@@ -8,19 +8,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
+
+import java.util.*;
 
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "user", schema = "AccountDB")
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -35,13 +31,6 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "email", nullable = true, length = 40)
     private String email;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_spending", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "spending_id", referencedColumnName = "id"))
-    Set<Spending> spendings;
-
-
 
 
     public User(String firstName, String lastName, String login, String password, String email) {
@@ -83,5 +72,67 @@ public class User implements UserDetails {
         return true;
     }
 
+    public User() {
+    }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

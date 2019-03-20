@@ -1,6 +1,6 @@
 package com.acountservice2.controllers;
 
-import com.acountservice2.entities.RegistrationForm;
+import com.acountservice2.formobjects.RegistrationForm;
 import com.acountservice2.repositories.UserRepository;
 import com.acountservice2.validation.RegistrationValidator;
 import lombok.extern.slf4j.Slf4j;

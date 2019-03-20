@@ -6,34 +6,38 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
+
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
+@Table(name = "spending")
 @Data
 @NoArgsConstructor
-@Table(name = "spending")
 public class Spending {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private Long userId;
     private double amount;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category categoryId;
+    private Category category;
 
     private Date spendingtime;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @ManyToMany(mappedBy = "spendings")
-    Set<User> users;
-    public Spending(Long userId, double amount, Category categoryId, Date spendingtime) {
-        this.userId = userId;
+    public Spending(double amount, Category category, Date spendingtime, Long userId) {
         this.amount = amount;
-        this.categoryId = categoryId;
+        this.category = category;
         this.spendingtime = spendingtime;
+        this.userId = userId;
     }
+
+
+
+
 }

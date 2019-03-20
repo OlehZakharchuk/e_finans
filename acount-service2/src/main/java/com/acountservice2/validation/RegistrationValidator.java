@@ -1,6 +1,6 @@
 package com.acountservice2.validation;
 
-import com.acountservice2.entities.RegistrationForm;
+import com.acountservice2.formobjects.RegistrationForm;
 import com.acountservice2.entities.User;
 import com.acountservice2.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;

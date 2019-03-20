@@ -1,5 +1,6 @@
-package com.acountservice2.entities;
+package com.acountservice2.formobjects;
 
+import com.acountservice2.entities.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -5,13 +5,15 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
-@RequiredArgsConstructor
 @Table(name = "category")
-public class Category {
+public class Category  {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,6 +22,10 @@ public class Category {
     private String description;
     @Column(length = 45)
     private String name;
-    @OneToMany(mappedBy = "categoryId", cascade = CascadeType.ALL)
-    private Set<Spending> spendings;
+//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+ //   private List<Spending> spendings= new ArrayList<>();
+
+
+
+
 }
