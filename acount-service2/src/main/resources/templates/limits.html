@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Limits</title>
+    <link th:href="@{/css/mainStyle.css}" rel="stylesheet" type="text/css" media="all">
+    <!--<script type="application/javascript" src="/static/js/showingMessagge"></script>-->
+    <!--<script  th:src="@{../static/js/changingState}" src="/static/js/changingState" type="application/javascript"></script>-->
+</head>
+<body>
+
+<div class="form-style-5" >
+    <form th:action="@{/limits/add}" method="post" th:object="${limitForm}" >
+
+        <script>
+            function changeStateOfSelect() {
+                var checkbox = document.getElementById("check");
+                var mySelect = document.getElementById("select");
+                if(checkbox.checked) {
+                    //if checked means gonna set to year limit, month should return 0
+                    mySelect.disabled = true;
+                    mySelect.value = 0;
+
+                }
+                else {
+                    mySelect.disabled = false;
+                    mySelect.required = true;
+                    mySelect.value = 1;
+                }
+
+            }
+        </script>
+        <input th:type="checkbox" id="check" th:field="*{isYear}" onchange="changeStateOfSelect()"> Year limit
+        <label>Month</label>
+        <select th:field="*{month}" id="select" onchange="changeStateOfSelect()" >
+            <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}">
+            </option>
+        </select>
+        <label>Year</label>
+        <select th:field="*{year}">
+            <option th:each="i : ${#numbers.sequence(2018,3000)}" th:value="${i}" th:text="${i}">
+            </option>
+        </select>
+        <label>Currency</label>
+        <select th:field="*{money}">
+            <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}">
+            </option>
+        </select>
+        <span class="validationError"  th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">
+                Error</span>
+        <label>Limit</label>
+        <fieldset>
+            <input type="text" name="howmuch"  th:field="*{amount}" placeholder="Type quote"/>
+        </fieldset>
+        <input type="submit" id="submitButton" onclick="showSuccessMes()" value="Apply"/>
+
+
+    </form>
+</div>
+<form th:action="@{/limits/set}" method="get">
+    <input type="submit" value="Set limit"/>
+</form>
+<footer>
+    <form th:action="@{/mainpage}">
+        <input type="submit" value="Home"/>
+    </form>
+</footer>
+</body>
+</html>

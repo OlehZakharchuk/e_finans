@@ -1,0 +1,16 @@
+function changeStateOfSelect(check, sel) {
+    var checkbox = document.getElementById(check);
+    var mySelect = document.getElementById(sel);
+    if(checkbox.checked) {
+        //if checked means gonna set to year limit, month should return 0
+        mySelect.disabled = true;
+        mySelect.value = 0;
+
+    }
+    else {
+        mySelect.disabled = false;
+        mySelect.required = true;
+        mySelect.value = 1;
+    }
+
+}

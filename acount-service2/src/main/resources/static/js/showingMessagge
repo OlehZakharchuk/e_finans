@@ -1,0 +1,10 @@
+/*<![CDATA[*/
+function showSuccessMes() {
+    var hasErrors =  /*[[${#fields.hasErrors()}]]*/ true;
+    if( !hasErrors)
+        alert('You added limit Successfully')
+    else{
+        alert('Some errors')
+    }
+}
+/*]]>*/

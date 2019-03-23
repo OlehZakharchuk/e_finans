@@ -29,8 +29,11 @@ public class LoginController {
         model.addAttribute("loginOfLogedUser", user.getLogin());
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(category -> categories.add(category));
-        SpendingForm spendingForm = new SpendingForm();
-        model.addAttribute("spendingForm", spendingForm);
+        if(!model.containsAttribute("spendingForm")) {
+            SpendingForm spendingForm = new SpendingForm();
+            model.addAttribute("spendingForm", spendingForm);
+        }
+
         model.addAttribute("categories", categories);
         model.addAttribute("currencies", Money.values());
         return "main_page";

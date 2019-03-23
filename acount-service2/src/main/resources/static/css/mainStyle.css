@@ -98,6 +98,16 @@
     background: #109177;
 }
 
+span.validationError {
+    color: red;
+    font-size: xx-small;
+}
+span.validationSuccess {
+    color: green;
+    font-size: xx-small;
+}
+
+
 
 
 

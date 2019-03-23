@@ -3,12 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--text/html-->
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8">
     <title>Login page</title>
     <link href="../static/css/mainStyle.css"  th:href="@{/css/mainStyle.css}" rel="stylesheet" type="text/css" media="all">
+
+    <!--<script th:src="@{../static/js/showingMessagge}" src="/static/js/showingMessagge" type="application/javascript" th:inline="javascript"></script>-->
 </head>
 
 <body>
+
 <div class="welcomeStyle">
     <p th:text="${nameOfLogedUser}">Welcome: </p>
     You logged as: <p th:text ="${loginOfLogedUser}"></p>
@@ -19,11 +23,13 @@
 
 <div class="form-style-5" >
     <form th:action="@{/spending/add}" method="post" th:object="${spendingForm}" >
-            <label>Date</label>
-            <input type="date" th:field="*{timePlacedSpending}" th:value="${timePlacedSpending}">
+
+        <label>Date</label>
+            <input type="date" th:field="*{timePlacedSpending}"  th:required="true">
       <label>Type of spending</label>
         <select th:field="*{category}">
-               <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+               <option th:each="categoryIterator : ${categories}" th:value="${categoryIterator.id}"
+                       th:text="${categoryIterator.name}">
                </option>
         </select>
             <label>Currency</label>
@@ -31,15 +37,16 @@
                 <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}">
                 </option>
             </select>
+    <span class="validationError" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">
+                Error</span>
+            <input type="text" name="howmuch"  th:field="*{amount}" placeholder="Type quote">
 
-        <fieldset>
-            <input type="text" name="howmuch"  th:field="*{amount}" placeholder="Type quote"></input>
-        </fieldset>
-        <input type="submit" value="Apply" />
+        <input type="submit" id="submitButton" value="Apply"  onclick="showSuccessMes()"/>
     </form>
-
-
 </div>
+<form th:action="@{/limits/set}" method="get">
+    <input type="submit" value="Set limit"/>
+</form>
 
 <!--<footer>-->
 

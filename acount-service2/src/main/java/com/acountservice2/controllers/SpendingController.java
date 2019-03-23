@@ -19,8 +19,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -38,8 +43,20 @@ public class SpendingController {
 
 
     @PostMapping("/add")
-    public String addNewSpending(SpendingForm spendingForm, @AuthenticationPrincipal User user){
+    public String addNewSpending(@Valid SpendingForm spendingForm, BindingResult bindingResult,
+                                 @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
         //todo pobieranie aktualnego kursu walut
+
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.spendingForm", bindingResult);
+            redirectAttributes.addFlashAttribute("spendingForm", spendingForm);
+
+            System.out.println("błąd przy dodawaniu wytraty");
+            return "redirect:/mainpage";
+        }
+
+
         Spending spending = spendingForm.toSpending(user.getId());
         System.out.println(spending);
         spendingRepo.save(spending);

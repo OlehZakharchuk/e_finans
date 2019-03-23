@@ -13,6 +13,7 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "category")
+@NoArgsConstructor
 public class Category  {
 
     @Id
