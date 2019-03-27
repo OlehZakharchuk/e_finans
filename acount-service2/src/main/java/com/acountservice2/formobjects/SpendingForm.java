@@ -13,7 +13,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 public class SpendingForm {
-    @Digits(integer = 10, fraction = 0, message = "should be digits here max 10 digits")
+    @Digits(integer = 10, fraction = 2, message = "should be digits here max 10 digits")
     private double amount;
     private Date timePlacedSpending;
     private Category category;

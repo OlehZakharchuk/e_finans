@@ -28,7 +28,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
-@RequestMapping("/limits")
 @Slf4j
 public class LimitsController {
 
@@ -39,7 +38,7 @@ public class LimitsController {
     @Autowired
     LimitRepository limitRepository;
 
-    @GetMapping("/set")
+    @GetMapping("/limits/set")
     public String showLimitsPage(Model model){
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(category -> categories.add(category));
@@ -52,7 +51,7 @@ public class LimitsController {
         return "limits";
     }
 
-        @PostMapping("/add")
+        @PostMapping("/limits/add")
     public String addNewLimit(@Valid LimitForm limitForm, BindingResult errors,
                               @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes,
                               Model model){
@@ -68,6 +67,8 @@ public class LimitsController {
             log.info("Limit jest wrzucony do bazy: "+ limit);
         return "redirect:/limits/set";
         }
+
+
 
 
 

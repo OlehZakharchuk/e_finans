@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+>
 <html>
 <head>
     <!--text/html-->
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8">
     <title>Login page</title>
-    <link href="../static/css/mainStyle.css"  th:href="@{/css/mainStyle.css}" rel="stylesheet" type="text/css" media="all">
+    <link th:href="@{/css/mainStyle.css}" rel="stylesheet" type="text/css" media="all">
 
     <!--<script th:src="@{../static/js/showingMessagge}" src="/static/js/showingMessagge" type="application/javascript" th:inline="javascript"></script>-->
 </head>
@@ -14,8 +15,7 @@
 <body>
 
 <div class="welcomeStyle">
-    <p th:text="${nameOfLogedUser}">Welcome: </p>
-    You logged as: <p th:text ="${loginOfLogedUser}"></p>
+    Welcome: <p th:text="${nameOfLogedUser}"></p>
     <form method="POST" th:action="@{/logout}">
         <input type="submit" value="Logout"/>
     </form>
@@ -42,8 +42,37 @@
             <input type="text" name="howmuch"  th:field="*{amount}" placeholder="Type quote">
 
         <input type="submit" id="submitButton" value="Apply"  onclick="showSuccessMes()"/>
+
+
     </form>
 </div>
+  <table class="greenTable">
+        <caption>Your last expenses</caption>
+        <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Date of Spending</th>
+            <th>For what</th>
+        </tr>
+        </thead>
+      <tfoot>
+      <!--<tr>-->
+          <!--<td colspan="5">-->
+              <!--<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a>-->
+                  <!--<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>-->
+          <!--</td>-->
+      <!--</tr>-->
+      </tfoot>
+    <tbody>
+    <tr th:each="spendingIterate : ${allSpending}">
+
+        <td th:text="${spendingIterate.getAmount()}">1</td>
+        <td th:text=" ${spendingIterate.getSpendingtime()}">2</td>
+        <td th:text="${spendingIterate.getCategory().getName()}">2</td>
+    </tr>
+    </tbody>
+    </table>
+
 <form th:action="@{/limits/set}" method="get">
     <input type="submit" value="Set limit"/>
 </form>

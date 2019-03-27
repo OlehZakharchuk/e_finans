@@ -11,9 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface SpendingRepository extends CrudRepository<Spending, Long> {
+public interface SpendingRepository extends PagingAndSortingRepository<Spending, Long> {
     List<Spending> findByAmount(double amount);
 
     List<Spending> findByUserId(long userId);
+    List<Spending> findAllByUserId(long userId, Pageable pageable);
 
 }
