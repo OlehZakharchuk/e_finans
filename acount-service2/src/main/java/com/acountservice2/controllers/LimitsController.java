@@ -8,6 +8,7 @@ import com.acountservice2.formobjects.Money;
 import com.acountservice2.formobjects.SpendingForm;
 import com.acountservice2.repositories.CategoryRepository;
 import com.acountservice2.repositories.LimitRepository;
+import com.acountservice2.services.LimitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,6 +38,8 @@ public class LimitsController {
     CategoryRepository categoryRepository;
     @Autowired
     LimitRepository limitRepository;
+    @Autowired
+    LimitService limitService;
 
     @GetMapping("/limits/set")
     public String showLimitsPage(Model model){
@@ -63,7 +66,9 @@ public class LimitsController {
             return "redirect:/limits/set";
         }
             Limit limit = limitForm.toLimit(user.getId());
-            limitRepository.save(limit);
+            //checking if this limit already exists in DB
+            limit = limitService.update(limit);
+
             log.info("Limit jest wrzucony do bazy: "+ limit);
         return "redirect:/limits/set";
         }
