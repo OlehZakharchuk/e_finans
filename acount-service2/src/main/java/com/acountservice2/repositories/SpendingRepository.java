@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 @Repository
 public interface SpendingRepository extends PagingAndSortingRepository<Spending, Long> {
@@ -16,5 +17,6 @@ public interface SpendingRepository extends PagingAndSortingRepository<Spending,
 
     List<Spending> findByUserId(long userId);
     List<Spending> findAllByUserId(long userId, Pageable pageable);
-
+    List<Spending> findByUserIdAndSpendingtimeBetween(long userid, Date from, Date to);
+    List<Spending> findAllByUserIdAndSpendingtime(long userId, Date spendingtime);
 }

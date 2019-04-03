@@ -9,6 +9,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +22,7 @@ public class SpendingForm {
     private Money money;
 
     public Spending toSpending(long userId){
+
         return new Spending(amount*money.multiplier, category, timePlacedSpending, userId);
     }
 

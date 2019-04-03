@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
       xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
@@ -7,32 +7,33 @@
     <title>Limits</title>
     <link th:href="@{/css/mainStyle.css}" rel="stylesheet" type="text/css" media="all">
     <!--<script type="application/javascript" src="/static/js/showingMessagge"></script>-->
-    <!--<script  th:src="@{../static/js/changingState}" src="/static/js/changingState" type="application/javascript"></script>-->
 </head>
 <body>
+
+<script>
+
+    function changeStateOfSelect() {
+        var checkbox = document.getElementById("check");
+        var mySelect = document.getElementById("select");
+        if(checkbox.checked) {
+            //if checked means gonna set to year limit, month should return 0
+            mySelect.disabled = true;
+            mySelect.value = 0;
+
+
+        }
+        else {
+            mySelect.disabled = false;
+            mySelect.required = true;
+            mySelect.value=1
+        }
+    }
+</script>
 
 <div class="form-style-5" >
     <form th:action="@{/limits/add}" method="post" th:object="${limitForm}" >
 
-        <script>
-            function changeStateOfSelect() {
-                var checkbox = document.getElementById("check");
-                var mySelect = document.getElementById("select");
-                if(checkbox.checked) {
-                    //if checked means gonna set to year limit, month should return 0
-                    mySelect.disabled = true;
-                    mySelect.value = 0;
-
-                }
-                else {
-                    mySelect.disabled = false;
-                    mySelect.required = true;
-                    mySelect.value = 1;
-                }
-
-            }
-        </script>
-        <input th:type="checkbox" id="check" th:field="*{isYear}" onchange="changeStateOfSelect()"> Year limit
+        <input th:type="checkbox" id="check" th:field="*{isYear}" onclick="changeStateOfSelect()"> Year limit
         <label>Month</label>
         <select th:field="*{month}" id="select" onchange="changeStateOfSelect()" >
             <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}">
@@ -40,7 +41,7 @@
         </select>
         <label>Year</label>
         <select th:field="*{year}">
-            <option th:each="i : ${#numbers.sequence(2018,3000)}" th:value="${i}" th:text="${i}">
+            <option th:each="i : ${#numbers.sequence(2019,3000)}" th:value="${i}" th:text="${i}">
             </option>
         </select>
         <label>Currency</label>
@@ -58,11 +59,34 @@
 
 
     </form>
+
 </div>
-<footer>
+
+<table class="greenTable">
+    <thead>
+    <tr>
+        <th>Your limit for current year</th>
+    </tr>
+    </thead>
+    <tr>
+        <td th:text="${yearLimit != 0} ? ${yearLimit} + ' PLN' : 'You didn\'t set year limit yet'"></td>
+    </tr>
+    <thead>
+    <tr>
+        <th>Your limit for current moth</th>
+    </tr>
+    </thead>
+    <tr>
+        <td th:text="${monthLimit != 0} ? ${monthLimit} +' PLN' : 'You didn\'t set month limit yet'"></td>
+    </tr>
+</table>
+
+    <footer>
     <form th:action="@{/mainpage}">
         <input type="submit" value="Home"/>
     </form>
 </footer>
+
+
 </body>
 </html>

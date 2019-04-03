@@ -144,6 +144,7 @@ body {
 
 
 table.greenTable {
+    border-radius: 4px;
     float: left;
     font-family: Georgia, serif;
     border: 6px solid #24943A;
@@ -165,7 +166,7 @@ table.greenTable thead {
     border-bottom: 0px solid #444444;
 }
 table.greenTable thead th {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: bold;
     color: #F0F0F0;
     text-align: left;

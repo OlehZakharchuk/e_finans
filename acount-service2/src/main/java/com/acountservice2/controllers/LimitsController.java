@@ -1,5 +1,6 @@
 package com.acountservice2.controllers;
 
+import com.acountservice2.config.AccountProps;
 import com.acountservice2.entities.Category;
 import com.acountservice2.entities.Limit;
 import com.acountservice2.entities.User;
@@ -11,6 +12,8 @@ import com.acountservice2.repositories.LimitRepository;
 import com.acountservice2.services.LimitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.time.Year;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -40,16 +41,21 @@ public class LimitsController {
     LimitRepository limitRepository;
     @Autowired
     LimitService limitService;
+    @Autowired
+    AccountProps accountProps;
 
     @GetMapping("/limits/set")
-    public String showLimitsPage(Model model){
+    public String showLimitsPage(Model model, @AuthenticationPrincipal User user){
         List<Category> categories = new ArrayList<>();
-        categoryRepository.findAll().forEach(category -> categories.add(category));
+        categoryRepository.findAll().forEach(categories::add);
         if(!model.containsAttribute("limitForm")){
             log.info("tworzymy nowy pusty limit");
             LimitForm limitForm = new LimitForm();
             model.addAttribute("limitForm", limitForm);
         }
+
+        model.addAttribute("yearLimit",limitService.getYearLimit(user));
+        model.addAttribute("monthLimit", limitService.getMonthLimit(user));
         model.addAttribute("currencies", Money.values());
         return "limits";
     }

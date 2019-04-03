@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<script type="text/javascript" th:src="@{/static/js/tableManipulation}"></script>
 
 <div class="welcomeStyle">
     Welcome: <p th:text="${nameOfLogedUser}"></p>
@@ -47,12 +48,11 @@
     </form>
 </div>
   <table class="greenTable">
-        <caption>Your last expenses</caption>
         <thead>
         <tr>
             <th>Amount</th>
             <th>Date of Spending</th>
-            <th>For what</th>
+            <th>Category</th>
         </tr>
         </thead>
       <tfoot>
@@ -62,6 +62,7 @@
                   <!--<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>-->
           <!--</td>-->
       <!--</tr>-->
+
       </tfoot>
     <tbody>
     <tr th:each="spendingIterate : ${allSpending}">
@@ -71,8 +72,47 @@
         <td th:text="${spendingIterate.getCategory().getName()}">2</td>
     </tr>
     </tbody>
+      <p>Your last expenses</p>
     </table>
 
+<table class="greenTable" id="tableId" >
+    <thead>
+    <tr>
+        <th>Expenses in current month</th>
+        <th>Remains according to month limit</th>
+    </tr>
+    </thead>
+    <tbody onload="alternateColor('tableId', 'row')">
+    <tr >
+        <td th:text="${monthSpending}"></td>
+        <td th:text="${monthRemains}" id="row"></td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <th>Expenses in current year</th>
+        <th>Remains according to year limit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${yearSpending}"></td>
+        <td th:text="${yearRemains}"></td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <th>Expenses in current day</th>
+        <th>Average expenses of current month</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${currentDaySpending}"></td>
+        <td th:text="${averageMonthSpending}"></td>
+    </tr>
+    </tbody>
+</table>
 <form th:action="@{/limits/set}" method="get">
     <input type="submit" value="Set limit"/>
 </form>
