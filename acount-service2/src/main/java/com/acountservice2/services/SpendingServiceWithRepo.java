@@ -15,11 +15,13 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
-public class DateForMainpageSpringDate implements DateForMainPageInterface{
+public class SpendingServiceWithRepo implements SpendingService {
     @Autowired
     SpendingRepository spendingRepository;
     @Autowired
     AccountProps accountProps;
+    @Autowired
+    DateHelper dateHelper;
     @Override
     public List<Spending> getLastNSpendingOfCurrentUser(long userId) {
         Pageable pageable = PageRequest.of(0, accountProps.getAmountOfSpending(),
@@ -64,5 +66,19 @@ public class DateForMainpageSpringDate implements DateForMainPageInterface{
         Date date = new Date(calendar.getTimeInMillis());
         return spendingRepository.findAllByUserIdAndSpendingtime(user.getId(), date)
                 .stream().mapToDouble(Spending::getAmount).sum();
+    }
+
+    @Override
+    public List<Spending> getSpendingForMonthOfYear(int month, int year, User user){
+        month-=1;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.YEAR, year);
+        dateHelper.normalizeTimeMembers(calendar);
+        Date from = new Date(calendar.getTimeInMillis());
+        calendar.set(year, month, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date to = new Date(calendar.getTimeInMillis());
+        return spendingRepository.findByUserIdAndSpendingtimeBetween(user.getId(), from, to);
     }
 }

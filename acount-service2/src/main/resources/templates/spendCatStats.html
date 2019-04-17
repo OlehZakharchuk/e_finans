@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; text/javascript">
+    <title></title>
+    <link href="../static/css/chartStyle.css" th:href="@{/static/css/chartStyle.css}" rel="stylesheet" type="text/css" media="all">
+    <!--<script>-->
+        <!--// var dataForChart ={-->
+        <!--//     datasets: [{-->
+        <!--//         // data: [[${spendMap.keySet()}]]-->
+        <!--//                 data: [133.3, 86.2, 52.2, 51.2, 50.2]-->
+        <!--//     }],-->
+        <!--//     labels:-->
+        <!--//         [-->
+        <!--//             "Saudi Arabia",-->
+        <!--//             "Russia",-->
+        <!--//             "Iraq",-->
+        <!--//             "United Arab Emirates",-->
+        <!--//             "Canada"-->
+        <!--//         ]-->
+        <!--//         // [[${spendMap.values()}]]-->
+        <!--//-->
+        <!--// };-->
+        <!--window.onload = function()  {-->
+            <!--var chart = new CanvasJS.Chart ("chartContainer", {-->
+                <!--title: {-->
+                    <!--text: "Monthly Expenses"-->
+                <!--},-->
+                <!--type: 'pie',-->
+                <!--data: {-->
+
+                    <!--labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],-->
+                    <!--datasets: [{-->
+                        <!--data: [2478, 5267, 734, 784, 433]-->
+                    <!--}]-->
+                <!--}-->
+            <!--});-->
+            <!--chart.render()-->
+        <!--}-->
+    <!--</script>-->
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        window.onload = function()  {
+            var labls = /*[[${spendMap.keySet().toArray()}]]*/ 1;
+            var vals = /*[[${spendMap.values().toArray()}]]*/1;
+            var dataForChart = [];
+            for (var j = 0; j < labls.length; j++) {
+                dataForChart.push({
+                    label: labls[j],
+                    y: vals[j]
+                })
+            }
+            var chart = new CanvasJS.Chart ("chartContainer", {
+                title: {
+                    text: "Monthly Expenses"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 240,
+                    yValueFormatString: "##0.00\"PLN \"",
+                    indexLabel: "{label} {y}",
+                    dataPoints: dataForChart
+
+
+                }]
+            });
+
+            chart.render();
+        }
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+
+    <div id="chartContainer" class="piestyle"></div>
+<!--<canvas id="chartContainer"></canvas>-->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!--<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>-->
+
+</body>

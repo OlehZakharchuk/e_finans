@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
     <!--text/html-->
@@ -12,9 +11,9 @@
     <!--<script th:src="@{../static/js/showingMessagge}" src="/static/js/showingMessagge" type="application/javascript" th:inline="javascript"></script>-->
 </head>
 
-<body>
-<script type="text/javascript" th:src="@{/static/js/tableManipulation}"></script>
 
+<body>
+<!--<script type="text/javascript" th:src="@{/static/js/tableManipulation}"></script>-->
 <div class="welcomeStyle">
     Welcome: <p th:text="${nameOfLogedUser}"></p>
     <form method="POST" th:action="@{/logout}">
@@ -33,12 +32,14 @@
                        th:text="${categoryIterator.name}">
                </option>
         </select>
+
             <label>Currency</label>
             <select th:field="*{money}">
-                <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}">
+                <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}" >
                 </option>
             </select>
-    <span class="validationError" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">
+
+            <span class="validationError" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">
                 Error</span>
             <input type="text" name="howmuch"  th:field="*{amount}" placeholder="Type quote">
 
@@ -78,7 +79,7 @@
 <table class="greenTable" id="tableId" >
     <thead>
     <tr>
-        <th>Expenses in current month</th>
+        <th>Current month's expenses</th>
         <th>Remains according to month limit</th>
     </tr>
     </thead>
@@ -90,7 +91,7 @@
     </tbody>
     <thead>
     <tr>
-        <th>Expenses in current year</th>
+        <th>Current year's expenses<</th>
         <th>Remains according to year limit</th>
     </tr>
     </thead>
@@ -102,7 +103,7 @@
     </tbody>
     <thead>
     <tr>
-        <th>Expenses in current day</th>
+        <th>Today's expenses<</th>
         <th>Average expenses of current month</th>
     </tr>
     </thead>
@@ -116,6 +117,10 @@
 <form th:action="@{/limits/set}" method="get">
     <input type="submit" value="Set limit"/>
 </form>
+<form th:action="@{/stats/spendingByCategory}" method="get">
+    <input type="submit" value="See month stats"/>
+</form>
+
 
 <!--<footer>-->
 
