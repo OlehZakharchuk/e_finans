@@ -81,4 +81,17 @@ public class SpendingServiceWithRepo implements SpendingService {
         Date to = new Date(calendar.getTimeInMillis());
         return spendingRepository.findByUserIdAndSpendingtimeBetween(user.getId(), from, to);
     }
+    
+    @Override
+    public List<Spending> getListSpendingForYear(User user, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date from = new Date(calendar.getTimeInMillis());
+        calendar.set(Calendar.MONTH, calendar.getActualMaximum(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date to = new Date(calendar.getTimeInMillis());
+        return spendingRepository.findByUserIdAndSpendingtimeBetween(user.getId(), from, to);
+    }
 }
