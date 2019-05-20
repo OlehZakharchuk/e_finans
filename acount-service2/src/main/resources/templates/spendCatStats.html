@@ -7,41 +7,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; text/javascript">
     <title></title>
-    <link href="../static/css/chartStyle.css" th:href="@{/static/css/chartStyle.css}" rel="stylesheet" type="text/css" media="all">
-    <!--<script>-->
-        <!--// var dataForChart ={-->
-        <!--//     datasets: [{-->
-        <!--//         // data: [[${spendMap.keySet()}]]-->
-        <!--//                 data: [133.3, 86.2, 52.2, 51.2, 50.2]-->
-        <!--//     }],-->
-        <!--//     labels:-->
-        <!--//         [-->
-        <!--//             "Saudi Arabia",-->
-        <!--//             "Russia",-->
-        <!--//             "Iraq",-->
-        <!--//             "United Arab Emirates",-->
-        <!--//             "Canada"-->
-        <!--//         ]-->
-        <!--//         // [[${spendMap.values()}]]-->
-        <!--//-->
-        <!--// };-->
-        <!--window.onload = function()  {-->
-            <!--var chart = new CanvasJS.Chart ("chartContainer", {-->
-                <!--title: {-->
-                    <!--text: "Monthly Expenses"-->
-                <!--},-->
-                <!--type: 'pie',-->
-                <!--data: {-->
-
-                    <!--labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],-->
-                    <!--datasets: [{-->
-                        <!--data: [2478, 5267, 734, 784, 433]-->
-                    <!--}]-->
-                <!--}-->
-            <!--});-->
-            <!--chart.render()-->
-        <!--}-->
-    <!--</script>-->
+    <link  th:href="@{/static/css/chartStyle.css}" rel="stylesheet" type="text/css" media="all">
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
         window.onload = function()  {
@@ -61,6 +27,8 @@
                 data: [{
                     type: "pie",
                     startAngle: 240,
+                    showInLegend: "true",
+                    legendText: "{label}",
                     yValueFormatString: "##0.00\"PLN \"",
                     indexLabel: "{label} {y}",
                     dataPoints: dataForChart
@@ -73,12 +41,51 @@
         }
         /*]]>*/
     </script>
+    <script>
+
+        function changeStateOfSelect() {
+            var checkbox = document.getElementById("check");
+            var mySelect = document.getElementById("select");
+            if(checkbox.checked) {
+                //if checked means gonna set to year limit, month should return 0
+                mySelect.disabled = true;
+
+            }
+            else {
+                mySelect.disabled = false;
+                mySelect.required = true;
+                mySelect.defaultValue=1
+            }
+        }
+    </script>
+
 </head>
 
 <body>
-
+<form th:action="@{/mainpage}">
+    <input type="submit" value="Home"/>
+</form>
+<div class="form-style-5" >
+<form th:action="@{/stats/spendingByCategory}" th:object="${statForm}" >
+    <input th:type="checkbox" id="check" th:field="*{isYear}" onclick="changeStateOfSelect()"> Year limit
+    <label>Month</label>
+    <select th:field="*{month}" id="select" onchange="changeStateOfSelect()" >
+        <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}">
+        </option>
+    </select>
+    <label>Year</label>
+    <select th:field="*{year}">
+        <option th:each="i : ${#numbers.sequence(2019,3000)}" th:value="${i}" th:text="${i}">
+        </option>
+    </select>
+    <input type="submit" value="See month stats"/>
+</form>
+</div>
     <div id="chartContainer" class="piestyle"></div>
-<!--<canvas id="chartContainer"></canvas>-->
+
+
+
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <!--<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>-->
 
