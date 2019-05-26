@@ -31,14 +31,19 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "email", nullable = true, length = 40)
     private String email;
+    @Column(name = "month_report")
+    private boolean monthReport;
+    @Column(name = "weekly_report")
+    private boolean weeklyReport;
 
-
-    public User(String firstName, String lastName, String login, String password, String email) {
+    public User(String firstName, String lastName, String login, String password, String email, boolean monthReport, boolean weeklyReport) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.monthReport = monthReport;
+        this.weeklyReport = weeklyReport;
     }
 
     @Override
@@ -123,6 +128,26 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public boolean isMonthReport() {
+        return monthReport;
+    }
+
+    public void setMonthReport(boolean monthReport) {
+        this.monthReport = monthReport;
+    }
+
+    public boolean isWeeklyReport() {
+        return weeklyReport;
+    }
+
+    public void setWeeklyReport(boolean weeklyReport) {
+        this.weeklyReport = weeklyReport;
     }
 
     @Override

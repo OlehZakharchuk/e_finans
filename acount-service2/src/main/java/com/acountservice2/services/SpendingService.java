@@ -8,10 +8,11 @@ import java.util.List;
 
 public interface SpendingService {
 
-	  List<Spending> getLastNSpendingOfCurrentUser(long userId);
-	    double getMonthSpending(User user);
-	    double getYearSpending(User user);
-	    double getCurrentDaySpending(User user);
-	    List<Spending> getSpendingForMonthOfYear(int month, int year, User user);
-	    List<Spending> getListSpendingForYear(User user, int year);
+    List<Spending> getLastNSpendingOfCurrentUser(long userId);
+    double getMonthSpending(User user);
+    double getYearSpending(User user);
+    double getCurrentDaySpending(User user);
+    List<Spending> getSpendingForMonthOfYear(int month, int year, User user);
+    List<Spending> getListSpendingForYear(User user, int year);
+    double getLastWeekSpending(User user);
 }

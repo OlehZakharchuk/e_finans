@@ -81,7 +81,7 @@ public class SpendingServiceWithRepo implements SpendingService {
         Date to = new Date(calendar.getTimeInMillis());
         return spendingRepository.findByUserIdAndSpendingtimeBetween(user.getId(), from, to);
     }
-    
+
     @Override
     public List<Spending> getListSpendingForYear(User user, int year) {
         Calendar calendar = Calendar.getInstance();
@@ -93,5 +93,16 @@ public class SpendingServiceWithRepo implements SpendingService {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date to = new Date(calendar.getTimeInMillis());
         return spendingRepository.findByUserIdAndSpendingtimeBetween(user.getId(), from, to);
+    }
+
+    @Override
+    public double getLastWeekSpending(User user) {
+        Calendar c = Calendar.getInstance();
+        Date to = new Date(c.getTimeInMillis());
+        c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)-6);
+        Date from = new Date(c.getTimeInMillis());
+        return spendingRepository.findByUserIdAndSpendingtimeBetween(user.getId(), from, to).stream()
+                .mapToDouble(Spending::getAmount).sum();
+
     }
 }
