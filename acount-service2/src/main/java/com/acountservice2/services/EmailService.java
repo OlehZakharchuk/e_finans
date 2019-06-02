@@ -86,7 +86,14 @@ public class EmailService {
             }
         }
 
-
-
+    }
+    public void sentResetToken(String to, String url){
+        String mailContent = "To reset your password, click the url below:\n" + url;
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(to);
+        mail.setSubject("Reset request");
+        mail.setText(mailContent);
+        javaMailSender.send(mail);
+        log.info("ResetToken sent to: "+to);
     }
 }
