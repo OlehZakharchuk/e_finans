@@ -35,6 +35,8 @@ public class User implements UserDetails {
     private boolean monthReport;
     @Column(name = "weekly_report")
     private boolean weeklyReport;
+    @Column(name = "reset_token")
+    private String resetToken;
 
     public User(String firstName, String lastName, String login, String password, String email, boolean monthReport, boolean weeklyReport) {
         this.firstName = firstName;
@@ -148,6 +150,14 @@ public class User implements UserDetails {
 
     public void setWeeklyReport(boolean weeklyReport) {
         this.weeklyReport = weeklyReport;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 
     @Override
